@@ -1,8 +1,8 @@
 import Bottle from "./Bottle/Bottle";
 import Container from "./Container/Container";
-import Drop from "./Drop/Drop"
 import People from "./People/People";
-import Configs, { Sizes } from "./Config";
+import DataMng from "./DataMng";
+import ConfirmBtn from "./ConfirmBtn/ConfirmBtn";
 
 // Learn TypeScript:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -24,13 +24,12 @@ export default class GameMng extends cc.Component {
     currentBottle: Bottle;
     container: Container;
     people: People;
+    dataMng: DataMng;
+    confirmBtn: ConfirmBtn;
 
     level: number;
 
     onLoad() {
-        this._initContainer();
-        this._initPeople();
-
         let collision = cc.director.getCollisionManager();
         collision.enabled = true;
 
@@ -39,25 +38,61 @@ export default class GameMng extends cc.Component {
         physics.gravity = cc.v2(0, -500);
         physics.debugDrawFlags = cc.PhysicsManager.DrawBits.e_shapeBit;
 
+        this.dataMng = this.node.getComponent(DataMng);
+        this.dataMng.node.on("onLoadProgress", this.onLoadProgress, this);
+        this.dataMng.node.on("onLoadComplete", this.onLoadComplete, this);
+        this.dataMng.load();
+    }
+
+    onLoadProgress(completeCount: number, totalCount: number, item: any) {
+        cc.log("Loading " + item + ", progress: " + (completeCount / totalCount));
+    }
+
+    onLoadComplete(error: Error, rsc: any[], urls: string[]) {
+        cc.log("Finish loaded: " + urls);
+        this.dataMng.node.off("onLoadProgress", this.onLoadProgress, this);
+        this.dataMng.node.off("onLoadComplete", this.onLoadComplete, this);
+        this.init();
+    }
+
+    init() {
+        cc.log("Initialize...");
+
+        this._initConfirmBtn();
+        this._initContainer();
+        this._initPeople();
+
         let width = this.node.width;
         let height = this.node.height;
 
-        this._initTouch(width, height);
+        this._initTouchBound(width, height);
         this.gameStart();
     }
 
-    gameStart() {
-        this.setupStage();
+    _initConfirmBtn() {
+        this.confirmBtn = this.node.getComponentInChildren(ConfirmBtn);
+        this.confirmBtn.init();
+        this.confirmBtn.node.on("confirm", this.onConfirm, this);
+
     }
 
-    setupStage() {
+    onConfirm() {
+        cc.log("Confirmed");
+    }
+
+    gameStart() {
+        this.nextStage();
+    }
+
+    nextStage() {
         this.level++;
         this.generateFace();
     }
 
     generateFace() {
-        let faceIndex:number = Math.random() * 5;
-        this.people.setFace(Sizes[faceIndex]);
+        let faceIndex:number = Math.floor(Math.random() * 5);
+        let img: cc.SpriteFrame = this.dataMng.getFaceByIndex(faceIndex);
+        this.people.setFace(img);
     }
 
     _initContainer() {
@@ -67,14 +102,14 @@ export default class GameMng extends cc.Component {
 
     _initPeople() {
         this.people = this.node.getComponentInChildren(People);
-        this.people.show(false);
+        this.people.init(this);
     }
 
     _onContainerCatchDrop(msg: cc.Collider) {
         msg.node.destroy();
     }
 
-    _initTouch(width: number, height: number) {
+    _initTouchBound(width: number, height: number) {
         let node = new cc.Node();
         let body = node.addComponent(cc.RigidBody);
         body.type = cc.RigidBodyType.Static;
@@ -87,7 +122,7 @@ export default class GameMng extends cc.Component {
         this._addBound(node, width * 0.5, 0, 20, height);
         this._addBound(node, -width * 0.5, 0, 20, height);
 
-        node.parent = this.node;
+        this.node.insertChild(node, 0);
 
         this.node.on("touchstart", this._touchStart, this);
         this.node.on("touchend", this._touchEnd, this);
@@ -106,6 +141,7 @@ export default class GameMng extends cc.Component {
             this.currentBottle.isPicked = false;
 
         this.currentBottle = null;
+        this.touchJoint.connectedBody = null;
     }
 
     _addBound(node: cc.Node, x: number, y: number, width: number, height: number) {
@@ -115,6 +151,4 @@ export default class GameMng extends cc.Component {
         col.size.width = width;
         col.size.height = height;
     }
-
-    // update (dt) {}
 }

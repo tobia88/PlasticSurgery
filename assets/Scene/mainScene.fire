@@ -41,9 +41,9 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1.9453098948245637,
-      "y": 1.9453098948245637,
-      "z": 1.9453098948245637
+      "x": 2.293585920760929,
+      "y": 2.293585920760929,
+      "z": 2.293585920760929
     },
     "_quat": {
       "__type__": "cc.Quat",
@@ -80,16 +80,22 @@
       },
       {
         "__id__": 32
+      },
+      {
+        "__id__": 40
       }
     ],
     "_active": true,
     "_level": 1,
     "_components": [
       {
-        "__id__": 40
+        "__id__": 44
       },
       {
-        "__id__": 41
+        "__id__": 45
+      },
+      {
+        "__id__": 46
       }
     ],
     "_prefab": null,
@@ -246,7 +252,7 @@
         "__id__": 9
       }
     ],
-    "_active": false,
+    "_active": true,
     "_level": 2,
     "_components": [
       {
@@ -282,8 +288,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -8,
-      "y": 1,
+      "x": -163,
+      "y": -61,
       "z": 0
     },
     "_scale": {
@@ -569,6 +575,7 @@
     "dropPrefab": {
       "__uuid__": "19bd6071-8e0a-4885-a8d1-077098a81be3"
     },
+    "type": 0,
     "_id": "caBdRgqEZF8bs7lHfAaUog"
   },
   {
@@ -924,7 +931,9 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_state": 0,
-    "_atlas": null,
+    "_atlas": {
+      "__uuid__": "cc1e3788-6515-49ff-a118-6e071ca432b9"
+    },
     "_id": "388CE/81VOYpkwxQx3bJqN"
   },
   {
@@ -1300,6 +1309,127 @@
     "_id": "026hBGIo9JYYMAZeMktBwN"
   },
   {
+    "__type__": "cc.Node",
+    "_name": "btn_confirm",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_level": 2,
+    "_components": [
+      {
+        "__id__": 41
+      },
+      {
+        "__id__": 42
+      },
+      {
+        "__id__": 43
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 96,
+      "height": 95
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 170.3,
+      "y": -302.1,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_quat": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_zIndex": 0,
+    "_is3DNode": false,
+    "groupIndex": 0,
+    "_id": "03MERfTWxBop6Hv4uv4XvE"
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 40
+    },
+    "_enabled": true,
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "312a5c9c-5c43-482b-97de-2836c439f096"
+    },
+    "_type": 0,
+    "_sizeMode": 1,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_state": 0,
+    "_atlas": null,
+    "_id": "7fHgBaeV9GbYbUiS0KGx4x"
+  },
+  {
+    "__type__": "347eckiRFxIIqsCZWkvVflw",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 40
+    },
+    "_enabled": true,
+    "_id": "8dt2IahglJEpww1o01GUWz"
+  },
+  {
+    "__type__": "cc.CircleCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 40
+    },
+    "_enabled": true,
+    "tag": 0,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_radius": 77.19999999999993,
+    "_id": "9fiW5utxpBzJLClV1cCYGX"
+  },
+  {
     "__type__": "cc.Canvas",
     "_name": "",
     "_objFlags": 0,
@@ -1325,5 +1455,15 @@
     },
     "_enabled": true,
     "_id": "a48JePfq5K9qoqa2kBcMTd"
+  },
+  {
+    "__type__": "d897bIcQ7ZGKIP1/Eg/J562",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_id": "a9+u4KitxBDLWy+PmwsP5a"
   }
 ]

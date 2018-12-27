@@ -2,9 +2,9 @@ const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class Drop extends cc.Component {
-    type: string;
+    type: number = 0;
 
-    init(type: string) {
+    init(type: number) {
         this.type = type;
     }
 }

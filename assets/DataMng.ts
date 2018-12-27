@@ -1,3 +1,5 @@
+import GameMng from "./GameMng";
+
 // Learn TypeScript:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/typescript.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
@@ -8,24 +10,35 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class DataMng extends cc.Component {
+    faceImages: cc.Texture2D[];
 
-    @property(cc.Label)
-    label: cc.Label = null;
+    prefix: string = "images/";
 
-    @property
-    text: string = 'hello';
 
-    // LIFE-CYCLE CALLBACKS:
+    load() {
+        var self = this;
 
-    // onLoad () {}
+        cc.loader.loadResDir(
+            this.prefix,
+            cc.SpriteFrame,
 
-    start () {
+            function (c: number, t: number, item: any) {
+                self.node.emit("onLoadProgress", c, t, item);
+            },
 
+            function (e: Error, rsc: any[], url: string[]) {
+                self.node.emit("onLoadComplete", e, rsc, url);
+            }
+        );
     }
 
-    // update (dt) {}
+    getFaceByIndex(index: number) {
+        let url: string = this.prefix + index + "-face";
+        cc.log("Loading url: " + url);
+        return cc.loader.getRes(url, cc.SpriteFrame);
+    }
 }

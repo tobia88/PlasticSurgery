@@ -1,3 +1,5 @@
+import GameMng from "../GameMng";
+
 // Learn TypeScript:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/typescript.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
@@ -12,9 +14,22 @@ const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class People extends cc.Component {
+    gameMng: GameMng;
+    faceSpr: cc.Sprite;
+    eyesSpr: cc.Sprite;
+
     show(value:boolean){
-        this.isValid = value;
+        // this.isValid = value;
     }
 
-    setFace
+    init(gameMng: GameMng){
+        this.gameMng = gameMng;
+        this.faceSpr = this.node.getChildByName("face").getComponent(cc.Sprite);
+        this.eyesSpr = this.node.getChildByName("eyes").getComponent(cc.Sprite);
+    }
+
+    setFace(image:cc.SpriteFrame)
+    {
+        this.faceSpr.spriteFrame = image;
+    }
 }
