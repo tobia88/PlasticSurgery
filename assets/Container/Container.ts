@@ -33,6 +33,6 @@ export default class Container extends cc.Component {
 
         cc.log(this.map);
 
-        this.node.emit("onCatchDrop", other);
+        this.node.emit("onCatchDrop", drop);
     }
 }

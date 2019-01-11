@@ -44,7 +44,7 @@ export default class Bottle extends cc.Component {
         }
     }
 
-    onLoad() {
+    init() {
         this._maxDropAmount = Configs.MAX_DROP_AMOUNT;
         this._fillSpr = this.node.getChildByName("bottle_fill")
                                  .getComponent(cc.Sprite);
@@ -62,7 +62,7 @@ export default class Bottle extends cc.Component {
         this._fillSpr.fillRange = rate;
     }
 
-    update(delta: number) {
+    onUpdate(delta: number) {
         if (!this._isPicked || this._dropAmount <= 0)
             return;
 

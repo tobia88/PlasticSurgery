@@ -3,6 +3,7 @@ import Container from "./Container/Container";
 import People from "./People/People";
 import DataMng from "./DataMng";
 import ConfirmBtn from "./ConfirmBtn/ConfirmBtn";
+import Mathf from "./Mathf";
 
 // Learn TypeScript:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -16,6 +17,15 @@ import ConfirmBtn from "./ConfirmBtn/ConfirmBtn";
 
 const {ccclass, property} = cc._decorator;
 
+export enum GameStates {
+    Null,
+    StartGame,
+    RoundStart,
+    Playing,
+    RoundEnd,
+    GameOver
+}
+
 
 @ccclass
 export default class GameMng extends cc.Component {
@@ -26,8 +36,45 @@ export default class GameMng extends cc.Component {
     people: People;
     dataMng: DataMng;
     confirmBtn: ConfirmBtn;
+    bottles: Bottle[];
 
     level: number;
+
+    maxTimer: number = 10;
+    timerDecPerRound: number = 0.5;
+    minTimer: number = 5;
+
+    _crtMaxTimer: number = 0;
+    _crtTimer: number = 0;
+
+    _gameState: GameStates;
+
+    get gameState() { return this._gameState; }
+    set gameState(value: GameStates) {
+        if (this._gameState != value) {
+            this._gameState = value;
+
+            switch (this._gameState) {
+                case GameStates.StartGame:
+                    this.startGame();
+                    this.gameState = GameStates.RoundStart;
+                    break;
+
+                case GameStates.RoundStart:
+                    // Animate patience in
+                    this.gameState = GameStates.Playing;
+                    break;
+
+                case GameStates.RoundEnd:
+                    // Animate patience leave
+                    this._crtMaxTimer -= this.timerDecPerRound;
+                    this._crtMaxTimer = Math.max(this._crtMaxTimer, this.minTimer);
+                    this._crtTimer = this._crtMaxTimer;
+                    this.generateNextStage();
+                    this.gameState = GameStates.RoundStart;
+            }
+        }
+    }
 
     onLoad() {
         let collision = cc.director.getCollisionManager();
@@ -60,39 +107,73 @@ export default class GameMng extends cc.Component {
 
         this._initConfirmBtn();
         this._initContainer();
+        this._initBottles();
         this._initPeople();
 
         let width = this.node.width;
         let height = this.node.height;
 
+        this._crtTimer = this._crtMaxTimer = this.maxTimer;
+
         this._initTouchBound(width, height);
-        this.gameStart();
+
+        this.gameState = GameStates.StartGame;
     }
 
     _initConfirmBtn() {
         this.confirmBtn = this.node.getComponentInChildren(ConfirmBtn);
         this.confirmBtn.init();
         this.confirmBtn.node.on("confirm", this.onConfirm, this);
-
     }
 
     onConfirm() {
         cc.log("Confirmed");
     }
 
-    gameStart() {
-        this.nextStage();
+    startGame() {
+        this.generateNextStage();
     }
 
-    nextStage() {
+    update(delta: number) {
+        switch(this.gameState)
+        {
+            case GameStates.Playing: this.onPlayingUpdate(delta); return;
+        }
+    }
+
+    onPlayingUpdate(delta: number): void
+    {
+        this._crtTimer -= delta;
+
+        this.bottles.forEach(b => {
+            b.onUpdate(delta);
+        });
+
+        if (this._crtTimer <= 0) {
+            this.showResult();
+        }
+
+    }
+
+    showResult() {
+
+    }
+
+    generateNextStage() {
         this.level++;
         this.generateFace();
     }
 
     generateFace() {
-        let faceIndex:number = Math.floor(Math.random() * 5);
-        let img: cc.SpriteFrame = this.dataMng.getFaceByIndex(faceIndex);
+        let img: cc.SpriteFrame = this.dataMng.getFeatureByValue("face", Math.random());
         this.people.setFace(img);
+    }
+
+    _initBottles() {
+        this.bottles = this.node.getComponentsInChildren(Bottle);
+        this.bottles.forEach(b => {
+            b.init();
+        });
     }
 
     _initContainer() {

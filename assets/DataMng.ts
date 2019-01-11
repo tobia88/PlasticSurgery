@@ -1,4 +1,7 @@
 import GameMng from "./GameMng";
+import Mathf from "./Mathf";
+import Configs from "./Config";
+import DataUtility from "./DataUtility";
 
 // Learn TypeScript:
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/typescript.html
@@ -18,7 +21,6 @@ export default class DataMng extends cc.Component {
 
     prefix: string = "images/";
 
-
     load() {
         var self = this;
 
@@ -36,9 +38,21 @@ export default class DataMng extends cc.Component {
         );
     }
 
-    getFaceByIndex(index: number) {
-        let url: string = this.prefix + index + "-face";
-        cc.log("Loading url: " + url);
+    getFeatureByValue(feature: string, value: number) : cc.SpriteFrame{
+        let index: number = this.getIndexByValue(feature, value);
+        let url: string = this.prefix + index + "-" + feature;
+        cc.log("Loading URL: " + url);
         return cc.loader.getRes(url, cc.SpriteFrame);
+    }
+
+    getIndexByValue(feature: string, value: number) {
+        value = Mathf.clamp01(value);
+        let amount = DataUtility.featureToAmount(feature);
+        if (amount == -1)
+        {
+            console.error(feature + " assets is not existed");
+            return -1;
+        }
+        return Math.round(value * amount);
     }
 }
