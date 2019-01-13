@@ -9,12 +9,26 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
 import Drop from "../Drop/Drop";
+import { FaceInfo } from "../GameMng";
 
 const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class Container extends cc.Component {
     map: Object = {}
+    faceInfo: FaceInfo = new FaceInfo();
+    
+    @property(cc.Animation)
+    sprayAnimation: cc.Animation = null;
+
+    init(): void {
+        this.sprayAnimation.play("idle");
+    }
+
+    reset() {
+        this.faceInfo.reset();
+    }
+
     
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         let drop = other.getComponent(Drop);
@@ -22,16 +36,11 @@ export default class Container extends cc.Component {
         if (drop == null)
             return;
 
-        if (this.map[drop.type] == undefined)
-        {
-            this.map[drop.type] = 1;
-        }
-        else
-        {
-            this.map[drop.type] ++;
-        }
+        cc.log("Drop Type: " + drop.type);
 
-        cc.log(this.map);
+        this.faceInfo.add(drop.type, drop.value);
+        
+        cc.log("Container value: " + this.faceInfo.toString());
 
         this.node.emit("onCatchDrop", drop);
     }

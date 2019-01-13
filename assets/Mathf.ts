@@ -17,3 +17,12 @@ export default class Mathf {
         return this.clamp(value, 0, 1);
     }
 }
+
+export class Random {
+    static RangeToInt(min: number, max: number) : number {
+        let range = max - min;
+        let random = Math.random() * range;
+        let retval = min + Math.floor(random);
+        return retval;
+    }
+}

@@ -21,7 +21,7 @@ export default class DataMng extends cc.Component {
 
     prefix: string = "images/";
 
-    load() {
+    load() : void {
         var self = this;
 
         cc.loader.loadResDir(
@@ -45,7 +45,7 @@ export default class DataMng extends cc.Component {
         return cc.loader.getRes(url, cc.SpriteFrame);
     }
 
-    getIndexByValue(feature: string, value: number) {
+    getIndexByValue(feature: string, value: number) : number {
         value = Mathf.clamp01(value);
         let amount = DataUtility.featureToAmount(feature);
         if (amount == -1)
@@ -53,6 +53,26 @@ export default class DataMng extends cc.Component {
             console.error(feature + " assets is not existed");
             return -1;
         }
-        return Math.round(value * amount);
+        return Math.min(Math.floor(value * amount), amount - 1);
+    }
+
+    getBottleBodyImg(type: string, sign: number): cc.SpriteFrame {
+        let url: string = this.prefix + "bottle_" + type + "_body_" + this.getFuncBySign(sign);
+        let retval: cc.SpriteFrame = cc.loader.getRes(url, cc.SpriteFrame);
+        console.log("Load bottle body image: " + url);
+        console.log("Result: " + retval);
+        return retval;
+    }
+
+    getBottleFillImg(type: string, sign: number): cc.SpriteFrame {
+        let url = this.prefix + "bottle_" + type + "_fill_" + this.getFuncBySign(sign);
+        let retval: cc.SpriteFrame = cc.loader.getRes(url, cc.SpriteFrame);
+        console.log("Load bottle fill image: " + url);
+        console.log("Result: " + retval);
+        return retval;
+    }
+
+    getFuncBySign(sign: number): string {
+        return (sign == 1) ? "big" : "small";
     }
 }

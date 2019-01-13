@@ -1,0 +1,32 @@
+{
+  "ver": "2.3.0",
+  "uuid": "fa495cf1-dce6-4bed-9d0a-ea3c02af4afb",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "platformSettings": {},
+  "subMetas": {
+    "bottle_eyes_body_big": {
+      "ver": "1.0.3",
+      "uuid": "31174e5f-ade9-430b-be7d-cdd0984866fb",
+      "rawTextureUuid": "fa495cf1-dce6-4bed-9d0a-ea3c02af4afb",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 89,
+      "height": 93,
+      "rawWidth": 89,
+      "rawHeight": 93,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

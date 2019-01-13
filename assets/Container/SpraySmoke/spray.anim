@@ -1,0 +1,73 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "spray",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.9666666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "props": {
+      "opacity": [
+        {
+          "frame": 0,
+          "value": 0
+        },
+        {
+          "frame": 0.11666666666666667,
+          "value": 255
+        },
+        {
+          "frame": 0.9666666666666667,
+          "value": 0
+        }
+      ],
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            257,
+            59
+          ],
+          "motionPath": []
+        },
+        {
+          "frame": 0.1,
+          "value": [
+            -3,
+            57
+          ],
+          "motionPath": []
+        }
+      ],
+      "scale": [
+        {
+          "frame": 0,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "frame": 0.06666666666666667,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 0.9,
+            "y": 0.9
+          }
+        },
+        {
+          "frame": 0.9666666666666667,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 1,
+            "y": 1
+          }
+        }
+      ]
+    }
+  },
+  "events": []
+}
