@@ -121,6 +121,7 @@ export default class GameMng extends cc.Component {
                     this._crtTimer = this._crtMaxTimer;
                     this.people.add(this.container.faceInfo);
                     this._timerDelayToStartGame = 5;
+                    cc.log("Check Result");
             }
         }
     }
@@ -181,6 +182,7 @@ export default class GameMng extends cc.Component {
     }
 
     onConfirm() : void {
+        this.gameState = GameStates.RoundEnd;
         cc.log("Confirmed");
     }
 
@@ -198,9 +200,9 @@ export default class GameMng extends cc.Component {
             b.onUpdate(delta);
         });
 
-        if (this._crtTimer <= 0) {
-            this.gameState = GameStates.RoundEnd;
-        }
+        // if (this._crtTimer <= 0) {
+        //     this.gameState = GameStates.RoundEnd;
+        // }
 
     }
 
